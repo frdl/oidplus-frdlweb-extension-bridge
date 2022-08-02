@@ -31,7 +31,7 @@ class OIDplusIpfs extends OIDplusObject {
 
 	public static function parse($node_id) {
 		@list($namespace, $cid) = explode(':', $node_id, 2);
-		if (//$namespace !== self::ns() && 
+		if ($namespace !== self::ns() && 
                     'ipfs' !== $namespace
                 && 'ipns' !== $namespace
             //    && 'dnslink' !== $namespace
@@ -46,7 +46,7 @@ class OIDplusIpfs extends OIDplusObject {
 		$ids[] = new OIDplusAltId('dnslink',
                      'dnslink=/'
                         .$this->cidtype.'/'
-                        .str_replace(['/ipfs/', '/ipns/'], ['', ''],$this->cid)), 
+                        .str_replace(['/ipfs/', '/ipns/'], ['', ''],$this->cid), 
                          _L('DNSLink (uses DNS TXT records)'));
 		return $ids;
 	}
@@ -60,9 +60,10 @@ class OIDplusIpfs extends OIDplusObject {
 	}
 
 	public static function ns() {
-		return (false !== $this->cidtype)
-                      ? $this->cidtype
-                      :  'ipfs';
+		return //(false !== $this->cidtype)
+                   //   ? $this->cidtype
+                    //  : 
+		'ipfs';
 	}
 
 	public static function root() {
