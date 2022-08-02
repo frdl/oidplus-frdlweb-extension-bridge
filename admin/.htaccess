@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+ 
+RewriteCond %{REMOTE_ADDR} !^127.0.0.1$
+RewriteCond %{REMOTE_ADDR} !^212.72.182.211$
+RewriteRule . access_ip.php [PT,E=PATH_INFO:$1,L]
+
+RewriteRule (webconsole.php) webconsole.php [PT,E=PATH_INFO:$1]
+RewriteRule ^(.*)$ index.php [PT,E=PATH_INFO:$1]
+
+#order deny,allow
+#deny from all
+#allow from ...
+#allow from ...
+</IfModule>

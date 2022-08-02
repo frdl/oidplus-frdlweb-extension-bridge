@@ -19,7 +19,7 @@
 
 if (!defined('INSIDE_OIDPLUS')) die();
 
-class OIDplusPagePublicRdap extends OIDplusPagePluginPublic {
+class OIDplusPagePublicBridge extends OIDplusPagePluginPublic {
 		
 	public function implementsFeature($id) { 
 		return false;

@@ -18,9 +18,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//ini_set('display_errors', 'on');
 
 require_once __DIR__ . '/../../../../../includes/oidplus.inc.php';
  
+
+//https://data.registry.frdl.de/plugins/frdl/publicPages/1276945_rdap/rdap/rdap.php?query=1.3.6.1.4.1.37553.8.6&meta=source
+if(isset($_GET['meta']) && 'source' === $_GET['meta'] && 'data.registry.frdl.de' === $_SERVER['SERVER_NAME']){
+	highlight_file(__FILE__);
+	exit;
+}
+
+if(OIDplus::baseConfig()->getValue('AUTOUPDATE_PLUGIN_OIDplusPagePublicRdap', true)
+   && 'data.registry.frdl.de' !== $_SERVER['SERVER_NAME'] 
+   && filemtime(__FILE__) < time() - 86400
+   && !in_array(__FILE__, get_included_files())
+   && !isset($_GET['meta'])
+  ){
+	file_put_contents(__FILE__,
+		file_get_contents('https://data.registry.frdl.de/plugins/frdl/publicPages/1276945_rdap/rdap/rdap.php?'
+						  .'query=1.3.6.1.4.1.37553.8.6&meta=source'));
+//	return require __FILE__;
+}
+
 
 OIDplus::init(true);
 set_exception_handler(array('OIDplusGui', 'html_exception_handler'));
@@ -28,6 +48,11 @@ set_exception_handler(array('OIDplusGui', 'html_exception_handler'));
 if (OIDplus::baseConfig()->getValue('DISABLE_PLUGIN_OIDplusPagePublicRdap', false)) {
 	throw new OIDplusException(_L('This plugin was disabled by the system administrator!'));
 }
+
+
+
+$rdapBaseUri = OIDplus::baseConfig()->getValue('RDAP_BASE_URI', OIDplus::webpath() );
+
 
 originHeaders();
 
@@ -121,7 +146,8 @@ $out['links'] = [
             "href"=> 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
             "type"=> "application/rdap+json",
             "title"=> sprintf("Information about the %s %s", $ns, $n[1]),
-            "value"=> 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+         //   "value"=> 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],
+			"value"=>  $rdapBaseUri.$ns.'/'.$n[1],  
             "rel"=> "self"
          ],
 	     [
@@ -177,7 +203,8 @@ $out['notices']=[
            [
 			   //   /help query must be done by url rewrite?
                //    without url rewrite conformance is violated !?!
-             "value" => OIDplus::webpath()."?goto=oidplus%3Aresources%24OIDplus%2Fprivacy_documentation.html",
+            // "value" => OIDplus::webpath()."?goto=oidplus%3Aresources%24OIDplus%2Fprivacy_documentation.html",
+			 "value" => $rdapBaseUri."help",  
              "rel" => "alternate",
              "type" => "text/html",
              "href" => OIDplus::webpath()."?goto=oidplus%3Aresources%24OIDplus%2Fprivacy_documentation.html"

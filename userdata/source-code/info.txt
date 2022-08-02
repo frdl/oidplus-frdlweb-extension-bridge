@@ -1,0 +1,3 @@
+# source-code
+This directory is used by the frdlweb extension plugin.
+Please do not change if you are not a developer.

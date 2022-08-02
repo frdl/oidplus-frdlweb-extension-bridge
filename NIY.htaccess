@@ -1,0 +1,25 @@
+
+RewriteEngine On
+RewriteRule ^(weid|oid|host|guid|fourcc|other|domain|doi|gs1|ipv4|ipv6|java|aid)/([^\/]+)$ ./plugins/frdl/publicPages/200_frdlweb_freeoid/rdap.php [L,NC,PT,E=PATH_INFO:$1]
+
+#ErrorDocument 404 index.php?goto=com.frdlweb.freeweid
+ErrorDocument 404 /error404.php
+   # Enable RewriteEngine
+  #  RewriteEngine on
+   # All relative URLs are based from root
+ #   RewriteBase /
+   # Do not change URLs that point to an existing file.
+#RewriteCond %{REQUEST_FILENAME} !-f
+   # Do not change URLs that point to an existing directory.
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+   # Rewrite URLs matching ^(.*)$ as $1 - this means all URLs.
+   # Rewrite it to the cleanurls router
+   # Use ?q=$1 to forward the original URL as a query parameter
+   # Use the flags:
+   # - L (do not continue rewriting)
+   # - B (encode back the parameters)
+   # - QSA (append the original query string parameters)
+#FallbackResource /index.php?goto=com.frdlweb.freeweid
+
+ 
