@@ -1,2 +1,2 @@
-# oidplus-frdlweb-rdap
-OIDplus Plugin for RDAP whois for OIDs and other OIDplus Object-Types.
+# oidplus-frdlweb-extension-bridge
+This Plugin is an extension package for the OIDplus, it bridges to the [Frdlweb Frameworks](https://frdlweb.de)
