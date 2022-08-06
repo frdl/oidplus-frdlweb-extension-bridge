@@ -83,8 +83,22 @@ if(2>count($n)){
  $query = 'oid:'.$query;	
 }
 $ns = $n[0];
-$out = [];
 
+
+
+$res = OIDplus::db()->query("select * from ###alt_ids where alt = ? AND ns = ?", [$n[1], $ns]);
+$alt = $res ? $res->fetch_object() : null;
+if(null !== $alt){
+	$query = $alt->id;
+	$n = explode(':', $query);
+   if(2>count($n)){
+       array_unshift($n, 'oid');	
+       $query = 'oid:'.$query;	
+   }
+   $ns = $n[0];
+}
+
+$out = [];
 
 
 	try {
