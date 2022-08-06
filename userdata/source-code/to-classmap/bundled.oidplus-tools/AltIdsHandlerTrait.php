@@ -1,5 +1,9 @@
 <?php
 namespace frdl\OidplusTools;
+use OIDplusObject;
+use OIDplus;
+use OIDplusAltId;
+use OIDplusException;
 
 trait AltIdsHandlerTrait /* using classes can implement AltIdsHandlerInterface */
 {
