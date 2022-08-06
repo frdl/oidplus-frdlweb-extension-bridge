@@ -23,7 +23,7 @@ class OIDplusIpfs extends OIDplusObject {
 	private $cid = false;
 	private $cidtype = false;
 
-	public function __construct($other, $type = 'ipfs') {
+	public function __construct($cid, $type = 'ipfs') {
 		// No syntax checks
 		$this->cid = $cid;
 		$this->cidtype = $type;
