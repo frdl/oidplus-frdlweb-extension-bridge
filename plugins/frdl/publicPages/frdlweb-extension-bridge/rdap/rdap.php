@@ -232,6 +232,15 @@ if($obj->isConfidential()){
  $out['remarks'][1]['type'] = "result set truncated due to authorization"; 	
 }
 
+$out['statuses']=[
+	'active',
+	//'locked',	
+];
+
+if('oid' === $ns || 'weid' === $ns){
+	$out['statuses'][] = 'locked';
+}
+
 ___rdap_out($out);
 
 //print_r('<pre>');
