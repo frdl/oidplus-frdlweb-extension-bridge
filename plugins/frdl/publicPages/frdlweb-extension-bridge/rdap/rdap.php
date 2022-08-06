@@ -237,9 +237,6 @@ $out['statuses']=[
 	//'locked',	
 ];
 
-if('oid' === $ns || 'weid' === $ns){
-	$out['statuses'][] = 'locked';
-}
 
 ___rdap_out($out);
 
